@@ -22,11 +22,12 @@ conf = yaml.load(f, Loader=yaml.FullLoader)
 
 
 def get_data():
+    host = conf['global']['host']
     modpoll_output = os.popen(
-        './modpoll -m enc 192.168.0.126 -p 23 -a 04 -c 18 -r 8193 -t 4:hex -1 | grep -E [\[][0-9]*]:.0x').read()
+        f'./modpoll -m enc -p 23 -a 04 -c 18 -r 8193 -t 4:hex -1 {host} | grep -E [\[][0-9]*]:.0x').read()
 
     modpoll_output += os.popen(
-        './modpoll -m enc 192.168.0.126 -p 23 -a 04 -c 2 -r 16385 -t 4:hex -1 | grep -E [\[][0-9]*]:.0x').read()
+        f'./modpoll -m enc -p 23 -a 04 -c 2 -r 16385 -t 4:hex -1 {host} | grep -E [\[][0-9]*]:.0x').read()
 
     lines = modpoll_output.split("\n")
     response = {}
