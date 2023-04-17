@@ -1,6 +1,7 @@
 FROM python:3.9.1
-RUN mkdir /get_meter/ ; \
-  curl "https://www.modbusdriver.com/downloads/modpoll.tgz" | tar -xvzf - -C /get_meter
+RUN mkdir -p /get_meter/bin ; \
+  curl "https://www.modbusdriver.com/downloads/modpoll.tgz" | tar -xvzf - -C /get_meter/bin \
+RUN ln -s /get_meter/modpoll/x86_64-linux-gnu/modpoll /get_meter/modpoll
 ADD ./get_meter.py /get_meter/
 ADD ./requirements.txt /get_meter/
 WORKDIR /get_meter
